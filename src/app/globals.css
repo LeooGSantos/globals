@@ -26,10 +26,10 @@
 
       & .login-register {
         @apply flex gap-4 items-center; /* Adiciona um espaçamento entre os botões */
-
+  
         & button {
           @apply bg-white text-porto-seguro-blue px-4 py-2 rounded-md transition duration-300 ease-out;
-
+  
           &:hover {
             @apply bg-porto-seguro-amber text-white; /* Destaque visual ao passar o mouse */
           }
