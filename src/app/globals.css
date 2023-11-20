@@ -200,3 +200,54 @@
 .quadro:hover {
   background-color: #f0f0f0;
 }
+
+.Prevencao {
+  /* Adicione os estilos desejados para centralizar e negrito nos títulos */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.Prevencao h1,
+.Prevencao h2 {
+  font-weight: bold;
+}
+
+.descricao {
+  color: #4b5563;
+  margin-bottom: 2rem;
+}
+
+.detalhesPrevencao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.detalhesPrevencao h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.detalhesPrevencao p {
+  color: #4b5563;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.detalhesPrevencao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  border: 1px solid #e2e8f0; /* Adicionando uma borda */
+  border-radius: 5px; /* Arredondando as bordas */
+  padding: 20px; /* Espaçamento interno */
+}
+
+/* ... */
