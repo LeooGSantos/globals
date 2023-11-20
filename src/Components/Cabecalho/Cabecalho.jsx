@@ -14,10 +14,10 @@ export default function Cabecalho() {
           <Link href="/Pages/prevencao">Prevenção e Promoção da Saúde</Link>
         </li>
         <li>
-          <Link href="/Pages/colaboracao">Prevenção e Promoção da Saúde</Link>
+          <Link href="/Pages/colaboracao">Colaboração Eficiente</Link>
         </li>
         <li>
-          <Link href="/Pages/prevencao">Prevenção e Promoção da Saúde</Link>
+          <Link href="/Pages/prevencao">Segurança e Privacidade</Link>
         </li>
         <li className="login-register">
             <Link href="/Pages/login">
