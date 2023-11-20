@@ -48,14 +48,21 @@
     }
 
     & p {
-      @apply font-semibold text-lg mb-2;
+      @apply font-semibold text-lg mb-4 text-gray-700;
     }
 
     & ul {
       @apply list-none p-0;
 
       & li {
-        @apply mb-1;
+        @apply mb-3;
+        @apply text-gray-600;
+
+        &::before {
+          content: "•"; /* Adiciona um ponto para cada item */
+          margin-right: 8px; /* Espaçamento entre o ponto e o texto */
+          color: #ffcc00; /* Cor amarela para o ponto */
+        }
       }
     }
   }
