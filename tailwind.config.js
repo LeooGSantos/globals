@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -7,6 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        'porto-seguro-blue': '#0077b6', 
+        'porto-seguro-red': '#ef233c',
+        'porto-seguro-amber': '#00ffff',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -14,5 +18,14 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-}
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.hover-bg-porto-seguro-amber:hover': {
+          'background-color': '#ffbf00',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    },
+  ],
+};

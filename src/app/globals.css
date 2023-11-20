@@ -2,26 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer components {
+  .cabecalho {
+    @apply bg-porto-seguro-blue text-white font-bold px-2 text-center text-4xl;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    & ul {
+      @apply flex flex-row justify-between items-center text-lg border border-l-0 border-r-0 border-b-0 py-4;
+
+      & li {
+        @apply mx-4;
+
+        & a {
+          @apply hover:bg-porto-seguro-amber py-2 px-3 rounded-md transition duration-300 ease-out;
+        }
+
+        &:hover {
+          @apply text-porto-seguro-amber; 
+        }
+      }
+
+      & .login-register {
+        @apply flex gap-4 items-center; 
+
+        & button {
+          @apply bg-white text-porto-seguro-blue px-4 py-2 rounded-md transition duration-300 ease-out;
+
+          &:hover {
+            @apply bg-porto-seguro-amber text-white; 
+          }
+        }
+      }
+    }
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
