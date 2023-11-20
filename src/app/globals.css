@@ -1,8 +1,11 @@
+/* global.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
+  /* Estilos para o cabeçalho */
   .cabecalho {
     @apply bg-porto-seguro-blue text-white font-bold px-2 text-center text-4xl;
 
@@ -17,20 +20,42 @@
         }
 
         &:hover {
-          @apply text-porto-seguro-amber; 
+          @apply text-porto-seguro-amber; /* Destaque visual ao passar o mouse */
         }
       }
 
       & .login-register {
-        @apply flex gap-4 items-center; 
+        @apply flex gap-4 items-center; /* Adiciona um espaçamento entre os botões */
 
         & button {
           @apply bg-white text-porto-seguro-blue px-4 py-2 rounded-md transition duration-300 ease-out;
 
           &:hover {
-            @apply bg-porto-seguro-amber text-white; 
+            @apply bg-porto-seguro-amber text-white; /* Destaque visual ao passar o mouse */
           }
         }
+      }
+    }
+  }
+
+  /* Estilos para o rodapé */
+  .rodape {
+    @apply bg-gray-200 py-6 text-center absolute bottom-0 w-full;
+    /* Mantém o rodapé no final da página */
+
+    & div {
+      @apply container mx-auto;
+    }
+
+    & p {
+      @apply font-semibold text-lg mb-2;
+    }
+
+    & ul {
+      @apply list-none p-0;
+
+      & li {
+        @apply mb-1;
       }
     }
   }
