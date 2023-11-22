@@ -40,7 +40,7 @@
 
   /* Estilos para o rodapé */
   .rodape {
-    @apply bg-gray-200 py-0 text-center absolute bottom-0 w-full; /* Reduzindo a altura do rodapé */
+    @apply bg-gray-200 py-0 text-center absolute  w-full; /* Reduzindo a altura do rodapé */
     /* Mantém o rodapé no final da página */
 
     & div {
