@@ -26,7 +26,7 @@ function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('URL_DO_SEU_ENDPOINT_DE_LOGIN', formData);
+      const response = await axios.post('http://localhost:8080/ProjetoGlobalSolution/', formData);
       console.log('Login realizado com sucesso!', response.data);
       // Aqui você pode armazenar o token ou outras informações recebidas no localStorage ou sessionStorage
     } catch (error) {
