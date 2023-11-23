@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+'use client';
+import { useState } from 'react';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -17,12 +17,26 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/ProjetoGlobalSolution/login', formData);
-      console.log('Login realizado com sucesso!', response.data);
+      // Simulação de requisição - substitua por sua lógica de manipulação de dados
+      const response = await simulateLogin(formData);
+      console.log('Login realizado com sucesso!', response);
       // Faça algo com a resposta se necessário
     } catch (error) {
       console.error('Erro ao fazer login:', error);
     }
+  };
+
+  // Função de simulação de login
+  const simulateLogin = async (data) => {
+    // Simulação de uma requisição assíncrona (pode ser substituída por sua lógica real)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Simulando um retorno de sucesso após 1 segundo
+        resolve({ status: 'success', data });
+        // Ou simular um erro:
+        // reject({ status: 'error', message: 'Erro ao fazer login' });
+      }, 1000);
+    });
   };
 
   return (

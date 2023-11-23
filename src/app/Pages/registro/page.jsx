@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+'use client';
+import { useEffect, useState } from 'react';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -18,12 +18,26 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/ProjetoGlobalSolution/register', formData);
-      console.log('Cadastro realizado com sucesso!', response.data);
+      // Simulação de requisição - substitua por sua lógica de manipulação de dados
+      const response = await simulateRegister(formData);
+      console.log('Cadastro realizado com sucesso!', response);
       // Faça algo com a resposta se necessário
     } catch (error) {
       console.error('Erro ao cadastrar:', error);
     }
+  };
+
+  // Função de simulação de cadastro
+  const simulateRegister = async (data) => {
+    // Simulação de uma requisição assíncrona (pode ser substituída por sua lógica real)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Simulando um retorno de sucesso após 1 segundo
+        resolve({ status: 'success', data });
+        // Ou simular um erro:
+        // reject({ status: 'error', message: 'Erro ao cadastrar usuário' });
+      }, 1000);
+    });
   };
 
   return (
