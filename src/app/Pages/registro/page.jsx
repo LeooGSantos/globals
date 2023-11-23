@@ -1,71 +1,40 @@
 import axios from 'axios';
-import { ClientOnly } from 'next/client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function RegisterPage() {
-  return (
-    <div>
-      <h1>Cadastro</h1>
-      <ClientOnly>
-        <FormularioCadastro />
-      </ClientOnly>
-    </div>
-  );
-}
-
-function FormularioCadastro() {
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Enviar dados de cadastro para o backend
-      const response = await axios.post('/api/register', formData);
-      console.log('Cadastro bem-sucedido:', response.data);
+      const response = await axios.post('http://localhost:8080/ProjetoGlobalSolution/register', formData);
+      console.log('Cadastro realizado com sucesso!', response.data);
+      // Faça algo com a resposta se necessário
     } catch (error) {
-      console.error('Erro no cadastro:', error);
+      console.error('Erro ao cadastrar:', error);
     }
   };
 
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
-
   return (
-    <form onSubmit={handleSubmit}>
-      <p>URL atual: {currentUrl}</p>
-      <input
-        type="text"
-        placeholder="Nome de usuário"
-        name="username"
-        value={formData.username}
-        onChange={handleInputChange}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        name="email"
-        value={formData.email}
-        onChange={handleInputChange}
-      />
-      <input
-        type="password"
-        placeholder="Senha"
-        name="password"
-        value={formData.password}
-        onChange={handleInputChange}
-      />
-      <button type="submit">Cadastrar</button>
-    </form>
+    <div>
+      <h1>Cadastro</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="username" placeholder="Nome de usuário" onChange={handleInputChange} />
+        <input type="email" name="email" placeholder="E-mail" onChange={handleInputChange} />
+        <input type="password" name="password" placeholder="Senha" onChange={handleInputChange} />
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
   );
 }
