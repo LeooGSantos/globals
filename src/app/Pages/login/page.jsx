@@ -1,19 +1,27 @@
-// LoginPage.jsx
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useClient } from 'next/client';
+import axios from 'axios';
+import { ClientOnly } from 'next/client';
+import React from 'react';
 
 export default function LoginPage() {
-  useClient(); // Marca este componente como um Componente do Cliente
+  return (
+    <ClientOnly>
+      <LoginForm />
+    </ClientOnly>
+  );
+}
 
-  const navigate = useRouter();
+function LoginForm() {
+  const [formData, setFormData] = React.useState({
+    email: '',
+    password: '',
+  });
 
-  useEffect(() => {
-    // Use useEffect para garantir que seja executado apenas no lado do cliente
-    const formData = {
-      email: '',
-      password: '',
-    };
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,57 +33,16 @@ export default function LoginPage() {
       console.error('Erro ao fazer login:', error);
     }
   };
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      formData[name] = value;
-    };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-
-      try {
-        const response = await fetch('URL_DO_SEU_ENDPOINT_DE_LOGIN', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          // Lógica para redirecionar ou executar ações após o login bem-sucedido
-          navigate.push('/dashboard'); // Exemplo de redirecionamento para a página de dashboard
-        } else {
-          // Lógica para lidar com falha no login, exibir mensagens de erro, etc.
-          console.error('Erro ao fazer login');
-        }
-      } catch (error) {
-        console.error('Erro ao fazer login:', error);
-      }
-    };
-
-    return () => {
-      // Limpeza dos event listeners ou outras operações ao desmontar o componente
-    };
-
-  }, [navigate]);
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   return (
     <div>
       <h1>Login</h1>
+      <p>URL atual: {currentUrl}</p>
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="E-mail"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Senha"
-          onChange={handleChange}
-        />
+        <input type="email" name="email" placeholder="E-mail" onChange={handleInputChange} />
+        <input type="password" name="password" placeholder="Senha" onChange={handleInputChange} />
         <button type="submit">Entrar</button>
       </form>
     </div>
