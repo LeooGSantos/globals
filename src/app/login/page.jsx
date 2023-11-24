@@ -1,94 +1,109 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+'use client';
+import { useState } from "react";
+import { useRouter } from "next/router";
 
-export default function Login() {
-    const navigate = useRouter();
+export default function Register() {
+  const navigate = useRouter();
 
-    const [usuario, setUsuario] = useState({
-        "info": "login",
-        "email": "",
-        "senha": ""
-    });
+  const [userInfo, setUserInfo] = useState({
+    usuario: "",
+    nome: "",
+    sobrenome: "",
+    idade: "",
+    cpf: "",
+    email: "",
+    telefone: "",
+    sexo: "",
+    senha: "",
+  });
 
-    const [msgStatus, setMsgStatus] = useState("");
-    const [classeMsg, setClasseMsg] = useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserInfo({ ...userInfo, [name]: value });
+  };
 
-    useEffect(() => {
-        if (msgStatus === "Login realizado com SUCESSO!") {
-            setClasseMsg("login-sucesso");
-        } else if (msgStatus === "Nome de usuário ou senha inválidos!") {
-            setClasseMsg("login-erro");
-        } else {
-            setClasseMsg("login-none");
-        }
-    }, [msgStatus]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("URL_PARA_SUA_API_DE_CADASTRO", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUsuario({ ...usuario, [name]: value });
-    };
+      if (response.ok) {
+        // Cadastro realizado com sucesso, redirecionar ou lidar com a resposta aqui
+        navigate.push("/"); // Redirecionamento para a página desejada após o cadastro
+      } else {
+        // Lidar com erros de cadastro aqui
+      }
+    } catch (error) {
+      console.error("Ocorreu um erro ao tentar realizar o cadastro:", error);
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await fetch("http://localhost:3000/api/base/base-users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(usuario)
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.status) {
-                    setMsgStatus("Login realizado com SUCESSO!");
-
-                    const tokenUser = Math.random().toString(16).substring(2) + Math.random().toString(16).substring(2);
-                    sessionStorage.setItem("token-user", tokenUser);
-                    sessionStorage.setItem("user-obj", JSON.stringify(data.user));
-
-                    setTimeout(() => {
-                        navigate.push("/");
-                    }, 5000);
-
-                } else {
-                    setMsgStatus("Nome de usuário ou senha inválidos!");
-
-                    setTimeout(() => {
-                        setMsgStatus("");
-                        setUsuario({
-                            "email": "",
-                            "senha": ""
-                        });
-                    }, 5000);
-                }
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    return (
-        <div className="login-form">
-          <h1>Login</h1>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Senha"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button type="submit">Entrar</button>
-          </form>
-        </div>
-      );      
+  return (
+    <div className="register-form">
+      <h1>Cadastro</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="usuario"
+          placeholder="Usuário"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="nome"
+          placeholder="Nome"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="sobrenome"
+          placeholder="Sobrenome"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="idade"
+          placeholder="Idade"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="cpf"
+          placeholder="CPF"
+          onChange={handleChange}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="telefone"
+          placeholder="Telefone"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="sexo"
+          placeholder="Sexo"
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="senha"
+          placeholder="Senha"
+          onChange={handleChange}
+        />
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+  );
 }

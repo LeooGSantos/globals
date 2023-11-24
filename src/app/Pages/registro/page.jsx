@@ -1,68 +1,56 @@
 'use client';
-import React, { useState } from 'react';
-import { registerToJavaAPI } from '../../api/base/api-java/javaApi';
+import { useState } from 'react';
 
-export default function RegisterPage() {
-  const [formData, setFormData] = useState({
-    usuario: '',
+export default function Registro() {
+  const [usuario, setUsuario] = useState({
     nome: '',
-    sobrenome: '',
-    idade: '',
-    cpf: '',
     email: '',
-    telefone: '',
-    sexo: '',
     senha: '',
   });
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUsuario({ ...usuario, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { usuario, nome, sobrenome, idade, cpf, email, telefone, sexo, senha } = formData;
-      // Faz a chamada para a função de cadastro na API Java
-      const response = await registerToJavaAPI(
-        usuario,
-        nome,
-        sobrenome,
-        idade,
-        cpf,
-        email,
-        telefone,
-        sexo,
-        senha
-      );
-      console.log('Cadastro realizado com sucesso!', response);
+      const response = await fetch("http://localhost:3000/api/base/base-users", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          info: 'cadastro',
+          nome: usuario.nome,
+          email: usuario.email,
+          senha: usuario.senha,
+        }),
+      });
 
-      // Salvando dados no LocalStorage após o cadastro bem-sucedido
-      localStorage.setItem('registrationData', JSON.stringify(response)); // Salva a resposta da API
-
+      if (response.ok) {
+        // Aqui você pode redirecionar o usuário para outra página ou fazer algo após o registro bem-sucedido
+      } else {
+        // Tratar erro no registro
+      }
     } catch (error) {
-      console.error('Erro ao cadastrar:', error);
+      console.error('Erro ao registrar:', error);
     }
   };
 
   return (
-    <div className="register-form">
-      <h1>Cadastro</h1>
+    <div className="registro-form">
+      <h1>Registro</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="usuario" placeholder="Usuário" onChange={handleInputChange} />
-        <input type="text" name="nome" placeholder="Nome" onChange={handleInputChange} />
-        <input type="text" name="sobrenome" placeholder="Sobrenome" onChange={handleInputChange} />
-        <input type="text" name="idade" placeholder="Idade" onChange={handleInputChange} />
-        <input type="text" name="cpf" placeholder="CPF" onChange={handleInputChange} />
-        <input type="email" name="email" placeholder="E-mail" onChange={handleInputChange} />
-        <input type="text" name="telefone" placeholder="Telefone" onChange={handleInputChange} />
-        <input type="text" name="sexo" placeholder="Sexo" onChange={handleInputChange} />
-        <input type="password" name="senha" placeholder="Senha" onChange={handleInputChange} />
+        {/* Campos para registro */}
+        <input type="text" name="nome" placeholder="Nome" onChange={handleChange} />
+        <input type="email" name="email" placeholder="E-mail" onChange={handleChange} />
+        <input type="password" name="senha" placeholder="Senha" onChange={handleChange} />
         <button type="submit">Cadastrar</button>
       </form>
     </div>
   );
 }
+
+
