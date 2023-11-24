@@ -319,8 +319,4 @@
     transition: background-color 0.3s ease;
   }
   
-  .register-form button[type='submit']:hover {
-    background-color: #555;
-  }
-
 }
