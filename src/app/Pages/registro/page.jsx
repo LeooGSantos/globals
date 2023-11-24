@@ -1,56 +1,61 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-export default function Registro() {
-  const [usuario, setUsuario] = useState({
+function RegisterPage() {
+  const [formData, setFormData] = useState({
     nome: '',
     email: '',
     senha: '',
+    idade: '',
+    telefone: '',
+    sexo: ''
   });
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUsuario({ ...usuario, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch("http://localhost:3000/api/base/base-users", {
+      const response = await fetch('http://localhost:3000/api/base/base-users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          info: 'cadastro',
-          nome: usuario.nome,
-          email: usuario.email,
-          senha: usuario.senha,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // Aqui você pode redirecionar o usuário para outra página ou fazer algo após o registro bem-sucedido
+        const data = await response.json();
+        console.log('Cadastro bem-sucedido:', data);
       } else {
-        // Tratar erro no registro
+        console.error('Erro no cadastro');
       }
     } catch (error) {
-      console.error('Erro ao registrar:', error);
+      console.error('Erro no cadastro:', error);
     }
   };
 
   return (
-    <div className="registro-form">
+    <div className="register-form">
       <h1>Registro</h1>
       <form onSubmit={handleSubmit}>
-        {/* Campos para registro */}
-        <input type="text" name="nome" placeholder="Nome" onChange={handleChange} />
-        <input type="email" name="email" placeholder="E-mail" onChange={handleChange} />
-        <input type="password" name="senha" placeholder="Senha" onChange={handleChange} />
+        <input type="text" name="nome" placeholder="Nome" onChange={handleInputChange} />
+        <input type="email" name="email" placeholder="E-mail" onChange={handleInputChange} />
+        <input type="password" name="senha" placeholder="Senha" onChange={handleInputChange} />
+        <input type="text" name="idade" placeholder="Idade" onChange={handleInputChange} />
+        <input type="text" name="telefone" placeholder="Telefone" onChange={handleInputChange} />
+        <input type="text" name="sexo" placeholder="Sexo" onChange={handleInputChange} />
         <button type="submit">Cadastrar</button>
       </form>
     </div>
   );
-}
+};
 
-
+export default RegisterPage;
