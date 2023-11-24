@@ -28,14 +28,18 @@ function RegisterPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ info: 'cadastro', ...formData }), // Enviando 'info' como 'cadastro'
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Cadastro bem-sucedido:', data);
+        if (data.status) {
+          console.log('Cadastro bem-sucedido:', data.user);
+        } else {
+          console.error('Erro no cadastro');
+        }
       } else {
-        console.error('Erro no cadastro');
+        console.error('Erro na requisição');
       }
     } catch (error) {
       console.error('Erro no cadastro:', error);
