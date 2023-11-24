@@ -1,11 +1,18 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { registerToJavaAPI } from '../../api/base/api-java/javaApi';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    username: '',
+    usuario: '',
+    nome: '',
+    sobrenome: '',
+    idade: '',
+    cpf: '',
     email: '',
-    password: '',
+    telefone: '',
+    sexo: '',
+    senha: '',
   });
 
   const handleInputChange = (e) => {
@@ -18,37 +25,45 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Simulação de requisição - substitua por sua lógica de manipulação de dados
-      const response = await simulateRegister(formData);
+      const { usuario, nome, sobrenome, idade, cpf, email, telefone, sexo, senha } = formData;
+      // Faz a chamada para a função de cadastro na API Java
+      const response = await registerToJavaAPI(
+        usuario,
+        nome,
+        sobrenome,
+        idade,
+        cpf,
+        email,
+        telefone,
+        sexo,
+        senha
+      );
       console.log('Cadastro realizado com sucesso!', response);
-      // Faça algo com a resposta se necessário
+
+      // Salvando dados no LocalStorage após o cadastro bem-sucedido
+      localStorage.setItem('registrationData', JSON.stringify(formData));
+
     } catch (error) {
       console.error('Erro ao cadastrar:', error);
     }
   };
 
-  // Função de simulação de cadastro
-  const simulateRegister = async (data) => {
-    // Simulação de uma requisição assíncrona (pode ser substituída por sua lógica real)
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulando um retorno de sucesso após 1 segundo
-        resolve({ status: 'success', data });
-        // Ou simular um erro:
-        // reject({ status: 'error', message: 'Erro ao cadastrar usuário' });
-      }, 1000);
-    });
-  };
-
   return (
-    <div>
+    <div className="register-form">
       <h1>Cadastro</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="username" placeholder="Nome de usuário" onChange={handleInputChange} />
+        <input type="text" name="usuario" placeholder="Usuário" onChange={handleInputChange} />
+        <input type="text" name="nome" placeholder="Nome" onChange={handleInputChange} />
+        <input type="text" name="sobrenome" placeholder="Sobrenome" onChange={handleInputChange} />
+        <input type="text" name="idade" placeholder="Idade" onChange={handleInputChange} />
+        <input type="text" name="cpf" placeholder="CPF" onChange={handleInputChange} />
         <input type="email" name="email" placeholder="E-mail" onChange={handleInputChange} />
-        <input type="password" name="password" placeholder="Senha" onChange={handleInputChange} />
+        <input type="text" name="telefone" placeholder="Telefone" onChange={handleInputChange} />
+        <input type="text" name="sexo" placeholder="Sexo" onChange={handleInputChange} />
+        <input type="password" name="senha" placeholder="Senha" onChange={handleInputChange} />
         <button type="submit">Cadastrar</button>
       </form>
     </div>
   );
 }
+
