@@ -41,7 +41,7 @@ export default function RegisterPage() {
       console.log('Cadastro realizado com sucesso!', response);
 
       // Salvando dados no LocalStorage após o cadastro bem-sucedido
-      localStorage.setItem('registrationData', JSON.stringify(formData));
+      localStorage.setItem('registrationData', JSON.stringify(response)); // Salva a resposta da API
 
     } catch (error) {
       console.error('Erro ao cadastrar:', error);
@@ -66,4 +66,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-

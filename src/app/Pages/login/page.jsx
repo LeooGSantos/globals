@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { loginToJavaAPI } from '../../api/base/api-java/javaApi'; 
+import { loginToJavaAPI } from '../../api/base/api-java/javaApi';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -24,8 +24,8 @@ export default function LoginPage() {
       console.log('Login realizado com sucesso!', response);
 
       // Salvando dados no LocalStorage após o login bem-sucedido
-      localStorage.setItem('userData', JSON.stringify(formData));
-      // Salvar token de autenticação, se houver
+      localStorage.setItem('userData', JSON.stringify(response)); // Salva a resposta da API
+
     } catch (error) {
       console.error('Erro ao fazer login:', error);
     }
