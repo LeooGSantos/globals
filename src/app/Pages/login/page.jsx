@@ -1,12 +1,12 @@
 'use client';
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const Login = () => {
   const router = useRouter();
   const [loginData, setLoginData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +15,7 @@ const Login = () => {
     const { name, value } = e.target;
     setLoginData({
       ...loginData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -27,8 +27,8 @@ const Login = () => {
         method: 'POST',
         body: JSON.stringify({ info: 'login', email: loginData.email, senha: loginData.password }),
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
 
       const data = await response.json();
@@ -36,7 +36,8 @@ const Login = () => {
 
       if (response.ok) {
         if (data.status) {
-          router.push('/');
+          setErrorMessage('');
+          router.push('/'); // Redireciona para a página principal após o login bem-sucedido
         } else {
           setErrorMessage('Usuário não encontrado ou credenciais inválidas');
         }
@@ -61,18 +62,21 @@ const Login = () => {
         <input type="email" name="email" placeholder="E-mail" value={loginData.email} onChange={handleInputChange} />
         <div style={{ position: 'relative' }}>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             name="password"
             placeholder="Senha"
             value={loginData.password}
             onChange={handleInputChange}
           />
           <span className="password-toggle" onClick={togglePasswordVisibility}>
-            {showPassword ? "Ocultar" : "Mostrar"}
+            {showPassword ? 'Ocultar' : 'Mostrar'}
           </span>
         </div>
         <button type="submit">Entrar</button>
       </form>
+      <p>
+        Quando for concluído, você será redirecionado para a página principal. Caso não seja concluído, aparecerá uma mensagem de erro.
+      </p>
     </div>
   );
 };

@@ -1,15 +1,9 @@
-'use client';
-import { useContext } from 'react';
-import Link from 'next/link';
-import AuthContext from '../contexts/AuthContext'; // Importe o contexto de autenticação aqui
+import Link from "next/link";
 
-const Cabecalho = () => {
-  const { user, logout } = useContext(AuthContext); // Obtenha informações de autenticação do contexto
-
+export default function Cabecalho() {
   return (
     <header className="cabecalho">
       <ul>
-        {/* Links padrão */}
         <li>
           <Link href="/">HOME</Link>
         </li>
@@ -25,23 +19,7 @@ const Cabecalho = () => {
         <li>
           <Link href="/Pages/privacidade">Segurança e Privacidade</Link>
         </li>
-
-        {/* Se estiver logado, exiba os links de Feedback, Formulário e Logout */}
-        {user ? (
-          <>
-            <li>
-              <Link href="/Pages/feedback">Feedback</Link>
-            </li>
-            <li>
-              <Link href="/Pages/formulario">Formulário</Link>
-            </li>
-            <li>
-              <button onClick={logout}>Logout</button>
-            </li>
-          </>
-        ) : (
-          /* Se não estiver logado, exiba os links de Login e Registro */
-          <li className="login-register">
+        <li className="login-register">
             <Link href="/Pages/login">
               <button>Login</button>
             </Link>
@@ -49,11 +27,7 @@ const Cabecalho = () => {
               <button>Registrar-se</button>
             </Link>
           </li>
-        )}
       </ul>
     </header>
   );
-};
-
-export default Cabecalho;
-
+}
